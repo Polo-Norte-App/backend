@@ -4,7 +4,7 @@ const handleError = require('./handleError')
 const create = async (req, res) => {
     try {
         console.log("body", req.body)
-        if (!req.body.name || !req.body.email || !req.body.password) {
+        if (!req.body.name || !req.body.email || !req.body.password || !req.body.cpf ) {
             throw { status: 400, message: "Invalid data" }
         }
         const created = await service.create(req.body)

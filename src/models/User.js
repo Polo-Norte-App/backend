@@ -5,6 +5,7 @@ function User({
     id,
     name,
     email,
+    cpf,
     salt,
     password,
     created_at = utcNow,
@@ -13,6 +14,7 @@ function User({
     this.id = id;
     this.name = name;
     this.email = email;
+    this.cpf = cpf;
     this.salt = salt;
     this.password = password;
     this.created_at = created_at;
@@ -24,6 +26,7 @@ User.prototype.view = function () {
         id: this.id,
         name: this.name,
         email: this.email,
+        cpf: this.cpf,
         created_at: this.created_at,
         updated_at: this.updated_at,
     }

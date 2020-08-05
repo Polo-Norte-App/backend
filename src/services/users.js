@@ -5,7 +5,7 @@ const { createToken } = require('./utils/jwt')
 
 const create = async (data) => {
 
-    const userFound = await repository.getOne({ email: data.email })
+    const userFound = await repository.getOne({ cpf: data.cpf })
 
     if(userFound.id){
         throw{status: 409, message:'User already exists'}
