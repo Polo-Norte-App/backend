@@ -30,7 +30,7 @@ const create = async (data) => {
 }
 
 const login = async loginData => {
-    const user = await repository.getOne({ email: loginData.email })
+    const user = await repository.getOne({ cpf: loginData.cpf })
     if (!user) {
         throw { status: 401, message: 'Not authorized' }
     }
