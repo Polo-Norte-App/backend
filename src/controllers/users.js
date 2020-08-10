@@ -4,7 +4,7 @@ const handleError = require('./handleError')
 const create = async (req, res) => {
     try {
         console.log("body", req.body)
-        if (!req.body.name || !req.body.email || !req.body.password || !req.body.cpf ) {
+        if (!req.body.name || !req.body.email || !req.body.password || !req.body.cpf) {
             throw { status: 400, message: "Invalid data" }
         }
         const created = await service.create(req.body)
@@ -24,8 +24,33 @@ const login = async (req, res) => {
         handleError(res, error)
     }
 }
+const forgot = async (req, res) => {
+    try {
+        console.log('Caiu no controller')
+        if (!req.body.cpf) {
+            throw { status: 400, message: "Invalid data" }
+        }
+        const data = await service.forgot(req.body)
+        res.status(200).json(data)
+    } catch (error) {
+        handleError(res, error)
+    }
+}
 
+const change = async (req, res) => {
+    try {
+        if (!req.body.currentPassword || !req.body.newPassword) {
+            throw { status: 400, message: "Invalid data" }
+        }
+        const data = await service.change(req.body, req.user.id)
+        res.status(200).json(data)
+    } catch (error) {
+        handleError(res, error)
+    }
+}
 module.exports = {
     create,
-    login
+    login,
+    forgot,
+    change
 }

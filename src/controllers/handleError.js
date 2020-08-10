@@ -1,5 +1,5 @@
 const handleError = (res, error) => {
-    console.log(error.message)
+    console.log(error)
     res.status(error.status || 500).json({...error, message: error.message})
 }
 

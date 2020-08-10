@@ -11,7 +11,7 @@
     "migration:up:prod": "knex migrate:latest --env production",
     "migration:down": "knex migrate:down",
     "seed:create": "knex seed:make",
-    "seed":"knex seed:run --env development"
+    "seed": "knex seed:run --env development"
   },
   "keywords": [
     "node"

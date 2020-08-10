@@ -5,6 +5,7 @@ const generateSalt = () => {
 }
 
 const encryptPassword = (password, salt = generateSalt()) => {
+    console.log('marmota', password)
     const encryptedPassword = crypto.pbkdf2Sync(
         password,
         salt,

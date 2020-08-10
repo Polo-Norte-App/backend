@@ -7,8 +7,8 @@ const create = async (data) => {
 
     const userFound = await repository.getOne({ cpf: data.cpf })
 
-    if(userFound.id){
-        throw{status: 409, message:'User already exists'}
+    if (userFound.id) {
+        throw { status: 409, message: 'User already exists' }
     }
 
     const user = new User({
@@ -45,6 +45,36 @@ const login = async loginData => {
     }
 }
 
+const forgot = async (data) => {
+    console.log('Caiu no service')
+    const userFound = await repository.getOne({ cpf: data.cpf })
+
+    if (!userFound.id) {
+        throw { status: 409, message: 'User not exists' }
+    }
+
+    const { salt, encryptedPassword: password } = encryptPassword("123")
+
+    const id = await repository.update(userFound.id, { password, salt })
+
+    const created = await repository.getOne({ id: id })
+
+    return created.view()
+}
+
+const change = async (data, id) => {
+
+    const user = await repository.getOne({ id: id })
+    const { encryptedPassword } = encryptPassword(data.currentPassword, user.salt)
+
+    if (encryptedPassword !== user.password) {
+        throw { status: 409, message: 'Precondition Failed' }
+    } else {
+        const { salt, encryptedPassword: password } = encryptPassword(data.newPassword)
+        await repository.change(user.id, { password, salt })
+    }
+}
+
 const getById = async (id, internalRepository = repository) => {
     const user = await internalRepository.getOne({ id: id })
     if (!user.id) {
@@ -56,5 +86,7 @@ const getById = async (id, internalRepository = repository) => {
 module.exports = {
     create,
     login,
+    forgot,
+    change,
     getById
 }
