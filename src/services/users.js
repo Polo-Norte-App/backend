@@ -29,6 +29,7 @@ const create = async (data) => {
     return created.view()
 }
 
+
 const login = async loginData => {
     const user = await repository.getOne({ cpf: loginData.cpf })
     if (!user) {
